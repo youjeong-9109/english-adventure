@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>아이콘 생성기</title></head>
+<body>
+<p>아래 버튼을 눌러 아이콘 파일을 저장하세요.</p>
+<canvas id="c"></canvas><br><br>
+<button onclick="save(192)">icon-192.png 저장</button>
+<button onclick="save(512)">icon-512.png 저장</button>
+<script>
+function draw(size) {
+  const c = document.getElementById('c');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, size, size);
+  g.addColorStop(0, '#667eea');
+  g.addColorStop(1, '#764ba2');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, size * 0.22);
+  ctx.fill();
+  ctx.font = `${size * 0.52}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🦉', size / 2, size / 2);
+}
+function save(size) {
+  draw(size);
+  const a = document.createElement('a');
+  a.download = `icon-${size}.png`;
+  a.href = document.getElementById('c').toDataURL('image/png');
+  a.click();
+}
+draw(192);
+</script>
+</body>
+</html>

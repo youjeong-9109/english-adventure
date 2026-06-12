@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>English Adventure 🌟</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="영어모험">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+
+<!-- ===== HOME ===== -->
+<div id="screen-home" class="screen active">
+  <div class="home-content">
+    <div class="mascot float-anim">🦉</div>
+    <h1 class="home-title">English<br>Adventure!</h1>
+    <div class="star-bar">
+      ⭐ 내 별: <span id="total-stars" class="star-count">0</span>
+    </div>
+    <div class="game-grid">
+      <div class="game-card" onclick="startGame('phonics')">
+        <div class="game-card-icon">🔤</div>
+        <div class="game-card-title">파닉스</div>
+        <div class="game-card-desc">알파벳 소리 배우기</div>
+        <div class="game-card-stars" id="stars-phonics">☆☆☆</div>
+      </div>
+      <div class="game-card" onclick="startGame('wordmatch')">
+        <div class="game-card-icon">🖼️</div>
+        <div class="game-card-title">단어 맞추기</div>
+        <div class="game-card-desc">그림 보고 단어 찾기</div>
+        <div class="game-card-stars" id="stars-wordmatch">☆☆☆</div>
+      </div>
+      <div class="game-card" onclick="startGame('spelling')">
+        <div class="game-card-icon">✏️</div>
+        <div class="game-card-title">스펠링</div>
+        <div class="game-card-desc">들으며 단어 완성하기</div>
+        <div class="game-card-stars" id="stars-spelling">☆☆☆</div>
+      </div>
+      <div class="game-card" onclick="startGame('speaking')">
+        <div class="game-card-icon">🎤</div>
+        <div class="game-card-title">발음 연습</div>
+        <div class="game-card-desc">따라 말해봐요!</div>
+        <div class="game-card-stars" id="stars-speaking">☆☆☆</div>
+      </div>
+      <div class="game-card game-card-snake" onclick="startGame('snake')">
+        <div class="game-card-snake-left">
+          <div class="game-card-icon">🐍</div>
+        </div>
+        <div class="game-card-snake-right">
+          <div class="game-card-title">파닉스 뱀 게임</div>
+          <div class="game-card-desc">소리 듣고 맞는 글자 먹기!</div>
+          <div class="game-card-stars">🏆 최고: <span id="snake-home-best">0</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PHONICS ===== -->
+<div id="screen-phonics" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="goHome()">← 홈</button>
+    <div class="game-title-bar">🔤 파닉스</div>
+    <div id="phonics-progress" class="progress-text">1 / 8</div>
+  </div>
+  <div class="game-body">
+    <div class="phonics-letter-card">
+      <div id="phonics-letter" class="big-letter">A</div>
+      <div id="phonics-letter-lower" class="big-letter-lower">a</div>
+    </div>
+    <div class="phonics-question">이 글자로 시작하는 그림은? 👇</div>
+    <div id="phonics-options" class="phonics-options-grid"></div>
+    <button class="sound-btn" onclick="playPhonicsSound()">🔊 다시 듣기</button>
+  </div>
+</div>
+
+<!-- ===== WORD MATCH ===== -->
+<div id="screen-wordmatch" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="goHome()">← 홈</button>
+    <div class="game-title-bar">🖼️ 단어 맞추기</div>
+    <div id="wordmatch-progress" class="progress-text">1 / 8</div>
+  </div>
+  <div class="game-body">
+    <div class="wordmatch-card">
+      <div id="wordmatch-emoji" class="huge-emoji">🐱</div>
+    </div>
+    <div class="game-question">이 그림의 영어 단어는? 👇</div>
+    <div id="wordmatch-options" class="wordmatch-options-grid"></div>
+    <button class="sound-btn" onclick="replayWordMatchWord()">🔊 다시 듣기</button>
+  </div>
+</div>
+
+<!-- ===== SPELLING ===== -->
+<div id="screen-spelling" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="goHome()">← 홈</button>
+    <div class="game-title-bar">✏️ 스펠링</div>
+    <div id="spelling-progress" class="progress-text">1 / 6</div>
+  </div>
+  <div class="game-body">
+    <div class="spelling-card">
+      <div id="spelling-emoji" class="huge-emoji">🐱</div>
+      <div id="spelling-hint" class="spelling-hint">힌트</div>
+    </div>
+    <div id="spelling-slots" class="spelling-slots"></div>
+    <div id="spelling-tiles" class="spelling-tiles"></div>
+    <button class="sound-btn" onclick="replaySpellingWord()">🔊 다시 듣기</button>
+  </div>
+</div>
+
+<!-- ===== SPEAKING ===== -->
+<div id="screen-speaking" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="goHome()">← 홈</button>
+    <div class="game-title-bar">🎤 발음 연습</div>
+    <div id="speaking-progress" class="progress-text">1 / 6</div>
+  </div>
+
+  <div id="speaking-no-mic" class="no-mic-msg">
+    <div class="big-emoji">😅</div>
+    <p>이 게임은 마이크가 필요해요!<br><br>Chrome 또는 Edge 브라우저에서<br>마이크를 허용해 주세요.</p>
+    <button class="btn-home" onclick="goHome()">홈으로 🏠</button>
+  </div>
+
+  <div id="speaking-game-area" class="game-body">
+    <div class="speaking-card">
+      <div id="speaking-emoji" class="huge-emoji">🍎</div>
+      <div id="speaking-word" class="speaking-word">apple</div>
+      <div id="speaking-translation" class="speaking-translation">사과</div>
+    </div>
+    <div id="speaking-feedback" class="speaking-feedback">🎤 버튼을 눌러 말해봐!</div>
+    <div class="speaking-controls">
+      <button class="sound-btn" onclick="replaySpeakingWord()">🔊 듣기</button>
+      <button id="speaking-mic-btn" class="mic-btn" onclick="startListening()">🎤</button>
+      <button class="skip-btn" onclick="skipSpeaking()">건너뛰기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SNAKE ===== -->
+<div id="screen-snake" class="screen">
+  <div class="game-header">
+    <button class="back-btn" onclick="stopSnake()">← 홈</button>
+    <div class="game-title-bar">🐍 파닉스 뱀</div>
+    <div class="snake-score-header">⭐ <span id="snake-score">0</span></div>
+  </div>
+
+  <!-- Target hint bar -->
+  <div class="snake-target-bar">
+    <div class="snake-find-label">찾아라!</div>
+    <div id="snake-target-letter" class="snake-big-target-letter">A</div>
+    <div class="snake-target-example">
+      <span id="snake-target-emoji" class="snake-target-emoji">🍎</span>
+      <span id="snake-target-word" class="snake-target-word">Apple</span>
+    </div>
+    <button class="snake-hear-btn" onclick="snakeGame?.announceTarget()">🔊</button>
+    <div class="snake-best-label">최고 <strong id="snake-best">0</strong></div>
+  </div>
+
+  <!-- Canvas area -->
+  <div class="snake-canvas-wrapper">
+    <canvas id="snake-canvas"></canvas>
+
+    <!-- Start overlay -->
+    <div id="snake-start-overlay" class="snake-overlay">
+      <div class="snake-overlay-box">
+        <div class="sov-emoji">🐍</div>
+        <div class="sov-title">파닉스 뱀 게임</div>
+        <div class="sov-desc">소리를 듣고 맞는 글자를<br>먹으러 가요! 🎵</div>
+        <div class="sov-hint">⌨️ 방향키 또는 아래 버튼</div>
+        <button class="btn-play-again" onclick="beginSnake()">시작! ▶</button>
+      </div>
+    </div>
+
+    <!-- Game over overlay -->
+    <div id="snake-over-overlay" class="snake-overlay" style="display:none">
+      <div class="snake-overlay-box">
+        <div class="sov-emoji">💀</div>
+        <div class="sov-title sov-gameover">게임 오버!</div>
+        <div class="sov-stats">
+          점수 <strong id="snake-result-score">0</strong>
+          &nbsp;|&nbsp;
+          최고 <strong id="snake-result-best">0</strong>
+        </div>
+        <div class="sov-answer-label">정답이었어요</div>
+        <div class="sov-answer">
+          <span id="snake-result-letter" class="sov-answer-letter">A</span>
+          <span id="snake-result-emoji">🍎</span>
+          <span id="snake-result-word">Apple</span>
+        </div>
+        <div class="result-buttons">
+          <button class="btn-play-again" onclick="restartSnake()">다시! 🔄</button>
+          <button class="btn-home" onclick="stopSnake()">홈 🏠</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D-Pad -->
+  <div class="dpad-container">
+    <div class="dpad">
+      <div class="dpad-row">
+        <div class="dpad-empty"></div>
+        <button class="dpad-btn" onpointerdown="snakeDpad(0,-1)">▲</button>
+        <div class="dpad-empty"></div>
+      </div>
+      <div class="dpad-row">
+        <button class="dpad-btn" onpointerdown="snakeDpad(-1,0)">◄</button>
+        <button class="dpad-btn dpad-center" onpointerdown="snakeGame?.announceTarget()">🔊</button>
+        <button class="dpad-btn" onpointerdown="snakeDpad(1,0)">►</button>
+      </div>
+      <div class="dpad-row">
+        <div class="dpad-empty"></div>
+        <button class="dpad-btn" onpointerdown="snakeDpad(0,1)">▼</button>
+        <div class="dpad-empty"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div id="screen-result" class="screen">
+  <div class="result-content">
+    <div id="result-emoji" class="result-big-emoji">🤩</div>
+    <div id="result-message" class="result-message">완벽해! 🌟</div>
+    <div id="result-stars" class="result-stars">⭐⭐⭐</div>
+    <div id="result-score" class="result-score">8 / 8</div>
+    <div class="result-buttons">
+      <button class="btn-play-again" onclick="playAgain()">다시 하기 🔄</button>
+      <button class="btn-home" onclick="goHome()">홈으로 🏠</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/phonics.js"></script>
+<script src="js/wordmatch.js"></script>
+<script src="js/spelling.js"></script>
+<script src="js/speaking.js"></script>
+<script src="js/snake.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
+</body>
+</html>
