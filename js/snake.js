@@ -130,10 +130,9 @@ class PhonicsSnake {
     this.dir = { ...this.nxtDir };
     const head = { x: this.snake[0].x + this.dir.x, y: this.snake[0].y + this.dir.y };
 
-    // Wall
-    if (head.x < 0 || head.x >= this.cols || head.y < 0 || head.y >= this.rows) {
-      this.die(null); return;
-    }
+    // Wall wrap
+    head.x = (head.x + this.cols) % this.cols;
+    head.y = (head.y + this.rows) % this.rows;
     // Self
     if (this.snake.slice(1).some(s => s.x === head.x && s.y === head.y)) {
       this.die(null); return;
