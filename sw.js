@@ -1,4 +1,4 @@
-const CACHE = 'english-adventure-v1';
+const CACHE = 'english-adventure-v2';
 const FILES = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const FILES = [
   './js/spelling.js',
   './js/speaking.js',
   './js/snake.js',
+  './js/bgm.js',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png'
